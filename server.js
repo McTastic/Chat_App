@@ -16,14 +16,19 @@ const io = new Server(server);
 // from a client
 io.on("connection", (socket) => {
   // from this point you are on the WS connection with a specific client
-  console.log(socket.id, "Server.js connected");
+  console.log(`User connected: ${socket.id}`);
 
-  socket.emit("confirmation", "connected");
+  // socket.emit("confirmation", "connected");
 
-  socket.on("event", (data) => {
-    console.log(`${socket.id} has sent the message >>>`, data);
-    socket.emit("event", "pingyPong");
+  // socket.on("event", (data) => {
+  //   console.log(`${socket.id} has sent the message >>>`, data);
+  //   socket.emit("event", "pingyPong");
+  // });
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
   });
+  
   socket.on("send-message",(data) =>{
     console.log(data)
   })

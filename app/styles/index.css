@@ -24,38 +24,12 @@ body{
     font-size: 100px;
     margin: auto;
     margin-top: 1em;
-    /* text-shadow: -5px -5px 40px #FF9E9E, 5px 5px 40px #FF9E9E; */
     text-shadow: -5px -5px 40px #5AB059, 5px 5px 40px #5AB059;
-    /* text-shadow: -5px -5px 40px #9A8217, 5px 5px 40px #9A8217; */
-    /* text-shadow: -5px -5px 40px #BC36B5, 5px 5px 40px #BC36B5; */
-    /* text-shadow: -5px -5px 40px #367DD4, 5px 5px 40px #367DD4; */
     box-shadow:  -5px -5px 40px #5AB059, 5px 5px 40px #5AB059, inset 0 0 1.3rem #5AB059 ;
     border: solid 4px white;
     width: 25%;
     border-radius: 40px;
 }
-
-/* .neon1{
-    text-shadow: -5px -5px 10px #367DD4, 5px 5px 10px #367DD4;
-}
-.neon2{
-    text-shadow: -5px -5px 10px #5AB059, 5px 5px 10px #5AB059; 
-}
-.neon3{
-    text-shadow: -5px -5px 10px #9A8217, 5px 5px 10px #9A8217;
-}
-.neon4{
-    text-shadow: -5px -5px 10px #BC36B5, 5px 5px 10px #BC36B5;
-}
-.neon5{
-    text-shadow: -5px -5px 10px #FF9E9E, 5px 5px 10px #FF9E9E; 
-}
-.neon6{
-    text-shadow: -5px -5px 10px #367DD4, 5px 5px 10px #367DD4;
-}
-.neon7{
-    text-shadow: -5px -5px 10px #5AB059, 5px 5px 10px #5AB059; 
-} */
 
 * {
 	box-sizing: border-box;
@@ -80,6 +54,38 @@ a {
 	border: 0;
 	font-size: 20px;
 	height: 38px;
+}
+
+/* Join Page */
+.joinForm{
+	margin: auto;
+	margin-top: 1em;
+	font-size: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items:flex-start;
+}
+.userWrapper,
+.roomWrapper{
+	display: flex;
+}
+.labelWrapper{
+	width: 7em;
+}
+.userForm,
+.roomForm{
+	font-size: 1em;
+}
+.joinBtn{
+	margin: auto;
+	font-size: 30px;
+	background: linear-gradient(to right, #2193b0, #6dd5ed);
+	border: none;
+	border-radius: 10%;
+	height: 2em;
+	width: 3em;
+	margin-top: 1em;
+
 }
 
 /* Chat Page */
