@@ -21,8 +21,14 @@ io.on("connection", (socket) => {
   socket.emit("confirmation", "connected");
 
   socket.on("event", (data) => {
-    console.log(socket.id, data);
+    console.log(`${socket.id} has sent the message >>>`, data);
     socket.emit("event", "pingyPong");
+  });
+  socket.on("send-message",(data) =>{
+    console.log(data)
+  })
+  socket.on("disconnect", ()=>{
+    console.log(`User disconnected: ${socket.id}`)
   });
 });
 

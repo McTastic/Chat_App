@@ -1,58 +1,55 @@
 import { useEffect, useState } from "react";
 import { json } from '@remix-run/node'
-import { Form } from "@remix-run/react";
-import type { ChangeEvent, FormEvent } from "react";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
-import {io } from "socket.io-client"
 
 interface LoaderData {
   user: string
   users: string[]
 }
-export const action: ActionFunction = async ({ request }) => {
-  // const user = await getSessionUser(request)
-  const formData = await request.formData()
-  const action = String(formData.get('_action'))
-
-  // if (action === 'logout') {
-  //   const session = await getSession(request.headers.get('Cookie'))
-  //   return redirect('/', {
-  //     headers: { 'Set-Cookie': await destroySession(session) },
-  //   })
-  // }
-
-  if (action === 'send-message') {
-    const message = String(formData.get('message'))
-    if (message.length > 0) {
-      // sendMessage(user, message)
-      console.log(message)
-    }
-  }
-
-  return null
-}
 
 export default function Index() {
   const [formValue, setFormValue] = useState("")
-  const [messageVal, setMessageVal]= useState([])
+  const [messageList, setMessageList] = useState([])
+  const hour = new Date(Date.now()).getHours() -12
   const socket = useSocket();
-  const sendMessage = (message:string) => {
-    socket?.emit("event", message)
-    setMessageVal(prev => [...prev, message])
+  const sendMessage = async (message:string) => {
+    event?.preventDefault()
+    if (message !== "") {
+      const messageData = {
+        message: message,
+        time:
+          hour +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
+    await socket?.emit("send-message", messageData)
+    setMessageList(prev => [...(prev || []), `${messageData.time}: ${messageData.message}`])
   };
+  setFormValue("");
+}
   const handleChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
     setFormValue(e.target.value);
     };
 
+  // useEffect(() => {
+  //   if (!socket) return;
+
+  //   // socket.on("event", (data) => {
+  //   //   console.log(`This is pingyPong from server  >>> ${data}`);
+  //   // });
+  //   socket.on("send-message", (data)=>{
+  //     console.log(`The message sent is ====> ${data}`)
+  //   })
+
+  //   // socket.emit("event", "ping");
+  // }, [socket]);
+
   useEffect(() => {
-    if (!socket) return;
-
-    socket.on("event", (data) => {
-      console.log(`This is pingyPong from server  >>> ${data}`);
+    if(!socket) return;
+    socket.on("receive_message", (data) => {
+      setMessageList((list) => [...list, data]);
     });
-
-    socket.emit("event", "ping");
   }, [socket]);
 
   return (
@@ -110,44 +107,43 @@ export default function Index() {
             <ul id="users"></ul>
           </div>
           <div className="chat-messages">{
-          messageVal.length > 0 ?
-          messageVal.map((message)=> 
-          <ul>
+          messageList.length > 0 ?
+          messageList.map((message, index)=> 
+          <ul key={index}>
             <li>{message}</li>
           </ul>
           )
           :"No Messages Yet!"}</div>
         </main>
         <div className="chat-form-container">
-          <Form id="chat-form" method="post">
+          <div id="chat-form" >
+            <div className="inputContainer">
             <input
               id="msg"
+              className="chatInput"
               type="text"
               name="message"
               value={formValue}
               onChange={(e)=>handleChange(e,"message")}
+              onKeyPress={(event) => {
+                event.key === "Enter" && sendMessage(formValue);
+              }}
               placeholder="Enter Message"
               required
               autoComplete="off"
             />
             <button 
             className="btn" 
-            type="submit"
-            name="_action"
+            type="button"
             value="send-message"
             onClick={()=>sendMessage(formValue)}
             >
               Send
             </button>
-          </Form>
+            </div>
+          </div>
         </div>
       </div>
-      <button
-        className="pingBtn"
-      >
-        Ping Socket
-      </button>
-      <p>{process.env.NODE_ENV}</p>
     </div>
   );
 }

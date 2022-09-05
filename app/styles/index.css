@@ -74,10 +74,12 @@ a {
 .btn {
 	cursor: pointer;
 	padding: 5px 15px;
+	margin: 5px;
 	background: var(--light-color);
 	color: var(--dark-color-a);
 	border: 0;
-	font-size: 17px;
+	font-size: 20px;
+	height: 38px;
 }
 
 /* Chat Page */
@@ -170,10 +172,13 @@ a {
 	flex: 1;
     background: var(--light-color);
 }
-.pingBtn{
-	width: 20vw;
-	background: linear-gradient(to top left,yellow,red);
-	height: 2vh;	
+.inputContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.chatInput{
+	width: 88%;
 }
 
 
