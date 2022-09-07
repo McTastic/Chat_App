@@ -60,7 +60,7 @@ export default function Chat({webSocket, username, room}:ChatProps){
         <div className="chat-container">
         <header className="chat-header">
           <h1>Chat App!</h1>
-          <a id="leave-btn" className="btn">
+          <a id="leave-btn" className="btn" href="/">
             Leave Room
           </a>
         </header>
