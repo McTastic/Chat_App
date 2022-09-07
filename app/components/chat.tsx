@@ -17,7 +17,8 @@ interface MsgDataProps{
 export default function Chat({webSocket, username, room}:ChatProps){
     const [formValue, setFormValue] = useState("");
     const [messageList, setMessageList] = useState<MsgDataProps[] | []>([]);
-    const hour = new Date(Date.now()).getHours() - 12 >= 0 ? new Date(Date.now()).getHours() : new Date(Date.now()).getHours()
+    const hourFormat =  new Date(Date.now()).getHours() - 12 >= 0 ? "pm" : "am"
+    const hour = new Date(Date.now()).getHours() - 12 >= 0 ? new Date(Date.now()).getHours()- 12 : new Date(Date.now()).getHours() 
     const minutes = new Date(Date.now()).getMinutes()
     const socket = useSocket();
     
@@ -47,6 +48,13 @@ export default function Chat({webSocket, username, room}:ChatProps){
           setMessageList((list) => [...list, data]);
         });
       }, [socket]);
+      useEffect(() => {
+        if (!webSocket) return;
+        webSocket.on("message", (data:MsgDataProps) => {
+          console.log(data)
+          setMessageList((prev)=>[...prev,data])
+        } );
+      }, [socket]);
 
     return(
         <div className="chat-container">
@@ -67,10 +75,10 @@ export default function Chat({webSocket, username, room}:ChatProps){
             {messageList.length > 0
               ? messageList.map(({message, user}, index) => (
                   <ul key={index}>
-                    <div className={user==username ? "msgContainerMe" : "msgContainerOthers"}>
+                    <div className={ user == "Server" ? "serverMsg": user==username ? "msgContainerMe" : "msgContainerOthers"}>
                     <h3 className="msgUser">{user}</h3>
                     <li className="msgMessage" style={{display:"flex"}}>{message}
-                    <p className="msgTime">{`${hour}:${minutes}`}</p>
+                    <p className="msgTime">{`${hour}:${minutes} ${hourFormat}`}</p>
                     </li>
                     </div>
                   </ul>

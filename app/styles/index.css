@@ -148,12 +148,27 @@ a {
 	border-radius: 5px;
 	overflow-wrap: break-word;
 }
+.msgContainerMe,
+.msgContainerOthers,
+.serverMsg{
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0 10px 0;
+}
+.msgContainerOthers,
+.serverMsg{
+	align-items: flex-end;
+}
 .msgContainerMe{
 	background: rgba(1,1,1,.2)
 }
 .msgContainerOthers{
-	background: rgba(200,100,100,.5)
+	background: rgba(20,100,200,.5)
 }
+.serverMsg{
+	background: rgba(0,100,50,.3)
+}
+
 .msgTime{
 	opacity: .3;
 	margin-left: 1em

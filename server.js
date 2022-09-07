@@ -5,6 +5,12 @@ const http = require("http");
 const compression = require("compression");
 const morgan = require("morgan");
 const { createRequestHandler } = require("@remix-run/express");
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+} = require("./utils/users");
 
 const BUILD_DIR = path.join(process.cwd(), "build");
 
@@ -14,20 +20,40 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-
   console.log(`User connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  socket.on("join_room", (username, room) => {
+    const user = userJoin(socket.id, username, room);
+
+    socket.join(user.room);
+    console.log(user);
+    // Welcome current user
+    socket.emit("message", {
+      user: "Server",
+      message: `${username}, Welcome to the chat!`,
+    });
+    // Broadcast when user joins
+    socket.broadcast.emit("message", {
+      user: "Server",
+      message: `${username} has joined the chat!`,
+    });
+    //Broadcast when client disconnects
+    socket.on("disconnect", () => {
+      io.emit("message", {
+        user: "Server",
+        message: `${username} has left the chat!`,
+      });
+    });
   });
 
-  socket.on("send-message",(data) =>{
-    console.log(data)
-    socket.to(data.room).emit("receive_message", {user: data.user, message: data.message});
-  })
-  socket.on("disconnect", ()=>{
-    console.log(`User disconnected: ${socket.id}`)
+  socket.on("send-message", (data) => {
+    console.log(data);
+    socket
+      .to(data.room)
+      .emit("receive_message", { user: data.user, message: data.message });
+  });
+  socket.on("disconnect", () => {
+    console.log(`User disconnected: ${socket.id}`);
   });
 });
 

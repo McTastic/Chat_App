@@ -1,12 +1,7 @@
 import { useState } from "react";
-import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
 import Chat from "../components/chat";
 
-interface LoaderData {
-  user: string;
-  users: string[];
-}
 
 export default function Index() {
   const[username, setUsername]= useState("")
@@ -18,7 +13,7 @@ export default function Index() {
     event?.preventDefault;
     if (!socket) return;
     if (username !== "" && room !== "") {
-      socket.emit("join_room", room);
+      socket.emit("join_room", username, room);
       setShowChat(true);
     }else{
       window.alert("You need to enter a Room ID and a Username to continue.")
