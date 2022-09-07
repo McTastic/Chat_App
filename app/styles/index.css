@@ -148,6 +148,16 @@ a {
 	border-radius: 5px;
 	overflow-wrap: break-word;
 }
+.msgContainerMe{
+	background: rgba(1,1,1,.2)
+}
+.msgContainerOthers{
+	background: rgba(200,100,100,.5)
+}
+.msgTime{
+	opacity: .3;
+	margin-left: 1em
+}
 
 .chat-messages .message .meta {
 	font-size: 15px;

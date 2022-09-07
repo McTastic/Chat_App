@@ -3,16 +3,22 @@ import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
 
 interface ChatProps{
-    webSocket?:string;
+    webSocket:any;
     room?:string;
     username: string;
 }
+interface MsgDataProps{
+  room: string;
+  user: string;
+  message: string;
+  prev: null;
+}
 
-export default function Chat({webSocket, username, room}){
+export default function Chat({webSocket, username, room}:ChatProps){
     const [formValue, setFormValue] = useState("");
-    const [messageList, setMessageList] = useState([]);
-    const [roomName, setRoomName] = useState("");
+    const [messageList, setMessageList] = useState<MsgDataProps[] | []>([]);
     const hour = new Date(Date.now()).getHours() - 12 >= 0 ? new Date(Date.now()).getHours() : new Date(Date.now()).getHours()
+    const minutes = new Date(Date.now()).getMinutes()
     const socket = useSocket();
     
     const sendMessage = async (message: string) => {
@@ -20,14 +26,13 @@ export default function Chat({webSocket, username, room}){
         if (message !== "") {
           const messageData = {
             room: room,
-            author: username,
+            user: username,
             message: message,
-            time: hour + ":" + new Date(Date.now()).getMinutes(),
           };
           await webSocket?.emit("send-message", messageData);
-          setMessageList((prev) => [
-            ...(prev || []),
-            `${messageData.author}:${messageData.time} ____ ${messageData.message}`,
+          setMessageList((prev:any) => [
+            ...prev,
+            {user: messageData.user, message: messageData.message}
           ]);
         }
         setFormValue("");
@@ -38,7 +43,7 @@ export default function Chat({webSocket, username, room}){
     
       useEffect(() => {
         if (!webSocket) return;
-        webSocket.on("receive_message", (data) => {
+        webSocket.on("receive_message", (data:MsgDataProps) => {
           setMessageList((list) => [...list, data]);
         });
       }, [socket]);
@@ -54,15 +59,20 @@ export default function Chat({webSocket, username, room}){
         <main className="chat-main">
           <div className="chat-sidebar">
             <h3>Room Name:</h3>
-            <h2 id="room-name">{roomName}</h2>
+            <h2 id="room-name">{room}</h2>
             <h3>Users</h3>
             <ul id="users"></ul>
           </div>
           <div className="chat-messages">
             {messageList.length > 0
-              ? messageList.map((message, index) => (
+              ? messageList.map(({message, user}, index) => (
                   <ul key={index}>
-                    <li>{message}</li>
+                    <div className={user==username ? "msgContainerMe" : "msgContainerOthers"}>
+                    <h3 className="msgUser">{user}</h3>
+                    <li className="msgMessage" style={{display:"flex"}}>{message}
+                    <p className="msgTime">{`${hour}:${minutes}`}</p>
+                    </li>
+                    </div>
                   </ul>
                 ))
               : "No Messages Yet!"}
