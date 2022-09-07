@@ -12,18 +12,11 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server);
-// Then you can use `io` to listen the `connection` event and get a socket
-// from a client
+
 io.on("connection", (socket) => {
-  // from this point you are on the WS connection with a specific client
+
   console.log(`User connected: ${socket.id}`);
 
-  // socket.emit("confirmation", "connected");
-
-  // socket.on("event", (data) => {
-  //   console.log(`${socket.id} has sent the message >>>`, data);
-  //   socket.emit("event", "pingyPong");
-  // });
   socket.on("join_room", (data) => {
     socket.join(data);
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
@@ -31,7 +24,7 @@ io.on("connection", (socket) => {
 
   socket.on("send-message",(data) =>{
     console.log(data)
-    socket.to(data.room).emit("receive_message", `${data.time}: ${data.message}`);
+    socket.to(data.room).emit("receive_message", `${data.author}: ${data.time} ____ ${data.message}`);
   })
   socket.on("disconnect", ()=>{
     console.log(`User disconnected: ${socket.id}`)

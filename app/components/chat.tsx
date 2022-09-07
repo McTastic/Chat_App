@@ -11,9 +11,10 @@ interface ChatProps{
 export default function Chat({webSocket, username, room}){
     const [formValue, setFormValue] = useState("");
     const [messageList, setMessageList] = useState([]);
-    const hour = new Date(Date.now()).getHours() - 12;
+    const [roomName, setRoomName] = useState("");
+    const hour = new Date(Date.now()).getHours() - 12 >= 0 ? new Date(Date.now()).getHours() : new Date(Date.now()).getHours()
     const socket = useSocket();
-
+    
     const sendMessage = async (message: string) => {
         event?.preventDefault();
         if (message !== "") {
@@ -26,7 +27,7 @@ export default function Chat({webSocket, username, room}){
           await webSocket?.emit("send-message", messageData);
           setMessageList((prev) => [
             ...(prev || []),
-            `${messageData.time}: ${messageData.message}`,
+            `${messageData.author}:${messageData.time} ____ ${messageData.message}`,
           ]);
         }
         setFormValue("");
@@ -53,7 +54,7 @@ export default function Chat({webSocket, username, room}){
         <main className="chat-main">
           <div className="chat-sidebar">
             <h3>Room Name:</h3>
-            <h2 id="room-name"></h2>
+            <h2 id="room-name">{roomName}</h2>
             <h3>Users</h3>
             <ul id="users"></ul>
           </div>
