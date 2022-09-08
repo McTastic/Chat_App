@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 interface ChatProps{
     webSocket:any;
@@ -71,10 +72,10 @@ export default function Chat({webSocket, username, room}:ChatProps){
             <h3>Users</h3>
             <ul id="users"></ul>
           </div>
-          <div className="chat-messages">
+          <ScrollToBottom className="chat-messages">
             {messageList.length > 0
               ? messageList.map(({message, user}, index) => (
-                  <ul key={index}>
+                  <ul key={index} className="messageWrapper">
                     <div className={ user == "Server" ? "serverMsg": user==username ? "msgContainerMe" : "msgContainerOthers"}>
                     <h3 className="msgUser">{user}</h3>
                     <li className="msgMessage" style={{display:"flex"}}>{message}
@@ -84,7 +85,7 @@ export default function Chat({webSocket, username, room}:ChatProps){
                   </ul>
                 ))
               : "No Messages Yet!"}
-          </div>
+          </ScrollToBottom>
         </main>
         <div className="chat-form-container">
           <div id="chat-form">

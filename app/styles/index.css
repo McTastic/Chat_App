@@ -107,7 +107,7 @@ a {
 
 .chat-main {
 	display: grid;
-	grid-template-columns: 1fr 4fr;
+	grid-template-columns: 1fr 6fr;
     height: 35vh;
 	color: black;
     background: var(--light-color)
@@ -218,8 +218,31 @@ a {
 
 
 @media (max-width: 700px) {
+	.neon{
+		width: 90vw;
+		font-size: 60px;
+	}
+	.joinForm{
+		font-size: 30px;
+		margin-top: 5em;
+	}
+	.labelWrapper{
+		width: 5em;
+		margin-right: 10px;
+	}
+	.userForm,
+	.roomForm{
+		width: 60%;
+	}
+
 	.chat-main {
-		display: block;
+		
+	}
+	.chat-messages{
+		width: 90vw;
+	}
+	.messageWrapper{
+		width: 100%;
 	}
 
 	.chat-sidebar {

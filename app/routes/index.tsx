@@ -40,7 +40,7 @@ export default function Index() {
         </h1>
       </div>
       {!showChat ?(
-      <form className="joinForm">
+      <form className="joinForm ">
         <div className="form-control">
           <div className="userWrapper">
           <div className="labelWrapper">
@@ -60,7 +60,7 @@ export default function Index() {
           ></input>
           </div>
         </div>
-        <div className="form-control roomForm">
+        <div className="form-control">
           <div className="roomWrapper">
         <div className="labelWrapper">
           <label htmlFor="room">Room</label>
