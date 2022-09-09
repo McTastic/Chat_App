@@ -6,8 +6,21 @@ import Chat from "../components/chat";
 export default function Index() {
   const[username, setUsername]= useState("")
   const [room, setRoom] = useState("");
+  // const [roomList, setRoomList]= useState([])
   const [showChat, setShowChat] = useState(false);
   const socket = useSocket();
+
+  // const roomListOutput = async ()=>{
+  //   if(roomList.length>0){
+  //     const roomData ={
+  //       room: room,
+  //       users: roomList
+  //     };
+  //     await socket?.emit("roomUsers", roomData);
+  //     setRoomList((prev:any)=>[...prev,{room:roomData.room, users: roomData.users}])
+  //   }
+  // }
+
 
   const joinRoom = () => {
     event?.preventDefault;
@@ -19,6 +32,11 @@ export default function Index() {
       window.alert("You need to enter a Room ID and a Username to continue.")
     }
   };
+  // const joinFuncs =() => {
+  //   roomListOutput();
+  //   joinRoom();
+  //   console.log(roomList)
+  // }
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

@@ -8,8 +8,8 @@ const { createRequestHandler } = require("@remix-run/express");
 const {
   userJoin,
   getCurrentUser,
-  userLeave,
   getRoomUsers,
+  userLeave,
 } = require("./utils/users");
 
 const BUILD_DIR = path.join(process.cwd(), "build");
@@ -18,41 +18,58 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server);
-
+const userList = {}
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   socket.on("join_room", (username, room) => {
-    const user = userJoin(socket.id, username, room);
 
+    // const user = userJoin(socket.id, username, room);
+    const user= {
+      name: username,
+      id: socket.id,
+      room: room
+    }
+    userList[socket.id]= user
     socket.join(user.room);
-    console.log(user);
+    
+
     // Welcome current user
     socket.emit("message", {
       user: "Server",
       message: `${username}, Welcome to the chat!`,
     });
+    // io.emit("connected", userList);
+    io.to(user.room).emit("users", Object.values(userList));
     // Broadcast when user joins
-    socket.broadcast.emit("message", {
+    socket.broadcast.to(user.room).emit("message", {
       user: "Server",
       message: `${username} has joined the chat!`,
     });
+    // Get users and room info
+    io.to(user.room).emit("roomUsers", {
+      room: user.room,
+      users: getRoomUsers(user.room),
+    });
+
     //Broadcast when client disconnects
     socket.on("disconnect", () => {
-      io.emit("message", {
+      io.to(user.room).emit("message", {
         user: "Server",
         message: `${username} has left the chat!`,
       });
     });
   });
 
+  // Listens for a message to be sent
   socket.on("send-message", (data) => {
     console.log(data);
     socket
       .to(data.room)
       .emit("receive_message", { user: data.user, message: data.message });
   });
-  socket.on("disconnect", () => {
+  // When client disconnects
+  socket.on("disconnect", (data) => {
     console.log(`User disconnected: ${socket.id}`);
   });
 });

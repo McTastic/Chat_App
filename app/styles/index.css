@@ -117,7 +117,7 @@ a {
 	background: var(--dark-color-b);
 	color: #fff;
 	padding: 20px 20px 60px;
-	overflow-y: scroll;
+	overflow-y: hidden;
 }
 
 .chat-sidebar h2 {
@@ -136,9 +136,9 @@ a {
 }
 
 .chat-messages {
-	padding: 30px;
+	padding: 20px;
 	max-height: 500px;
-	overflow-y: scroll;
+	overflow-y: hidden;
 }
 
 .chat-messages .message {
@@ -157,10 +157,11 @@ a {
 }
 .msgContainerOthers,
 .serverMsg{
-	align-items: flex-end;
+	align-items: flex-start;
 }
 .msgContainerMe{
-	background: rgba(1,1,1,.2)
+	background: rgba(1,1,1,.2);
+	align-items: flex-end;
 }
 .msgContainerOthers{
 	background: rgba(20,100,200,.5)
