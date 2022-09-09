@@ -57,12 +57,9 @@ export default function Chat({ webSocket, username, room }: ChatProps) {
     webSocket.on("receive_message", (data: MsgDataProps) => {
       setMessageList((list) => [...list, data]);
     });
-
   }, [socket]);
   useMemo(()=>{
     webSocket.on("users", (users:any) => setRoomList(users))
-    // webSocket.on("connected", (user:any) =>{
-    //   setRoomList(prev =>[...prev, user])})
   },[]); 
 
   console.log(roomList);
