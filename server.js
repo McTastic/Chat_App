@@ -5,12 +5,6 @@ const http = require("http");
 const compression = require("compression");
 const morgan = require("morgan");
 const { createRequestHandler } = require("@remix-run/express");
-const {
-  userJoin,
-  getCurrentUser,
-  getRoomUsers,
-  userLeave,
-} = require("./utils/users");
 
 const BUILD_DIR = path.join(process.cwd(), "build");
 
@@ -23,7 +17,6 @@ io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   socket.on("join_room", (username, room) => {
-    // const user = userJoin(socket.id, username, room);
     const user = {
       name: username,
       id: socket.id,
@@ -38,7 +31,6 @@ io.on("connection", (socket) => {
       user: "Server",
       message: `${username}, Welcome to the chat!`,
     });
-    // io.emit("connected", userList);//
     // Get users in a room
     io.to(user.room).emit("users", Object.values(userList));
     // Broadcast when user joins
@@ -46,11 +38,6 @@ io.on("connection", (socket) => {
       user: "Server",
       message: `${username} has joined the chat!`,
     });
-    // // Get users and room info
-    // io.to(user.room).emit("roomUsers", {
-    //   room: user.room,
-    //   users: getRoomUsers(user.room),
-    // });
 
     //Broadcast when client disconnects
     socket.on("disconnect", () => {

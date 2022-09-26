@@ -81,9 +81,6 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
           <h3>Users</h3>
             {roomList.map(({ name, id,room }, index) => (
           <ul key={id} id="users">
-            {/* {room==room ? (
-              <li>{name}</li>
-            ): <li></li>} */}
             {name}- Room {room}
           </ul>
             ))}
