@@ -105,7 +105,7 @@ export default function Index() {
         >Join</button>
       </form>
       ):(
-        <Chat webSocket ={socket} room={room} username={username}/>
+        <Chat setShowChat={setShowChat} room={room} username={username}/>
       )
       }
     </div>

@@ -2,10 +2,9 @@ import { useEffect, useState, useMemo } from "react";
 import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { useResolvedPath } from "@remix-run/react";
 
 interface ChatProps {
-  webSocket: any;
+  setShowChat: any;
   room?: string;
   username: string;
 }
@@ -16,7 +15,7 @@ interface MsgDataProps {
   prev: null;
 }
 
-export default function Chat({ webSocket, username, room }: ChatProps) {
+export default function Chat({setShowChat, username, room }: ChatProps) {
   const [formValue, setFormValue] = useState("");
   const [roomList, setRoomList] = useState([]);
   const [messageList, setMessageList] = useState<MsgDataProps[] | []>([]);
@@ -36,7 +35,7 @@ export default function Chat({ webSocket, username, room }: ChatProps) {
         user: username,
         message: message,
       };
-      await webSocket?.emit("send-message", messageData);
+      await socket?.emit("send-message", messageData);
       setMessageList((prev: any) => [
         ...prev,
         { user: messageData.user, message: messageData.message },
@@ -44,31 +43,34 @@ export default function Chat({ webSocket, username, room }: ChatProps) {
     }
     setFormValue("");
   };
+  const handleUserLeave =  () =>{
+    setShowChat(false)
+  }
   const handleChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
     setFormValue(e.target.value);
   };
 
   useEffect(() => {
-    if (!webSocket) return;
-    webSocket.on("message", (data: MsgDataProps) => {
-      console.log(data);
+    if (!socket) return;
+    socket.on("message", (data: MsgDataProps) => {
       setMessageList((prev) => [...prev, data]);
     });
-    webSocket.on("receive_message", (data: MsgDataProps) => {
+    socket.on("receive_message", (data: MsgDataProps) => {
       setMessageList((list) => [...list, data]);
     });
+    socket.on("userLeave", id =>{
+      setRoomList(users =>{
+        return users.filter(user => user.id !== id)
+      })
+    })
+    socket.on("users", (users:any) => setRoomList(users));
   }, [socket]);
-  useMemo(()=>{
-    webSocket.on("users", (users:any) => setRoomList(users))
-  },[]); 
-
-  console.log(roomList);
 
   return (
     <div className="chat-container">
       <header className="chat-header">
         <h1>Chat App!</h1>
-        <a id="leave-btn" className="btn" href="/">
+        <a id="leave-btn" onClick={handleUserLeave} className="btn"href="/">
           Leave Room
         </a>
       </header>
