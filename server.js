@@ -25,14 +25,18 @@ io.on("connection", (socket) => {
     userList[socket.id] = user;
     socket.join(user.room);
 
-
     // Welcome current user
     socket.emit("message", {
       user: "Server",
       message: `${username}, Welcome to the chat!`,
     });
     // Get users in a room
-    io.to(user.room).emit("users", Object.values(userList));
+    const userArr = Object.values(userList);
+    const checkRoom = (room) => {
+      return userArr.filter((user) => user.room === room);
+    };
+    const roomUsers = checkRoom(user.room);
+    io.to(user.room).emit("users", roomUsers);
     // Broadcast when user joins
     socket.broadcast.to(user.room).emit("message", {
       user: "Server",
@@ -45,8 +49,8 @@ io.on("connection", (socket) => {
         user: "Server",
         message: `${username} has left the chat!`,
       });
-      delete userList[socket.id]
-      io.to(user.room).emit("userLeave", socket.id)
+      delete userList[socket.id];
+      io.to(user.room).emit("userLeave", socket.id);
     });
   });
 
@@ -62,7 +66,6 @@ io.on("connection", (socket) => {
     console.log(`User disconnected: ${socket.id}`);
   });
 });
-
 
 app.use(compression());
 

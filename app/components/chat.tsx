@@ -17,7 +17,7 @@ interface MsgDataProps {
 
 export default function Chat({setShowChat, username, room }: ChatProps) {
   const [formValue, setFormValue] = useState("");
-  const [roomList, setRoomList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [messageList, setMessageList] = useState<MsgDataProps[] | []>([]);
   const hourFormat = new Date(Date.now()).getHours() - 12 >= 0 ? "pm" : "am";
   const hour =
@@ -59,11 +59,11 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
       setMessageList((list) => [...list, data]);
     });
     socket.on("userLeave", id =>{
-      setRoomList(users =>{
+      setUserList(users =>{
         return users.filter(user => user.id !== id)
       })
     })
-    socket.on("users", (users:any) => setRoomList(users));
+    socket.on("users", (users:any) => setUserList(users));
   }, [socket]);
 
   return (
@@ -79,9 +79,9 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
           <h3>Room Name:</h3>
           <h2 id="room-name">{room}</h2>
           <h3>Users</h3>
-            {roomList.map(({ name, id,room }, index) => (
+            {userList.map(({ name, id,room }, index) => (
           <ul key={id} id="users">
-            {name}- Room {room}
+            {name}
           </ul>
             ))}
         </div>
