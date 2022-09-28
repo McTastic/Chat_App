@@ -98,7 +98,7 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
                         : "msgContainerOthers"
                     }
                   >
-                    <h3 className="msgUser">{user}</h3>
+                    <h3 className="msgUser">{user===username ? "You" : user}</h3>
                     <li className="msgMessage" style={{ display: "flex" }}>
                       {message}
                       <p className="msgTime">{`${hour}:${minutes} ${hourFormat}`}</p>
