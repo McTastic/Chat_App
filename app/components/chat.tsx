@@ -59,8 +59,8 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
       setMessageList((list) => [...list, data]);
     });
     socket.on("userLeave", id =>{
-      setUserList(users =>{
-        return users.filter(user => user.id !== id)
+      setUserList((users:any) =>{
+        return users.filter((user:any) => user.id !== id)
       })
     })
     socket.on("users", (users:any) => setUserList(users));

@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build": "npm i && remix build",
     "dev": "remix build && run-p \"dev:*\"",
     "dev:node": "cross-env NODE_ENV=development nodemon ./server.js --watch ./server.js",
     "dev:remix": "remix watch",
