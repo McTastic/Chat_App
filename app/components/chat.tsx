@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import type { ChangeEvent } from "react";
 import { useSocket } from "~/context";
-import ScrollToBottom from "react-scroll-to-bottom";
+import ScrollToBottom from "react-scroll-to-bottom"; 
+import capitalizeFirstLetter from "utils/helpers";
 
 interface ChatProps {
   setShowChat: any;
@@ -77,7 +78,7 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
       <main className="chat-main">
         <div className="chat-sidebar">
           <h3>Room Name:</h3>
-          <h2 id="room-name">{room}</h2>
+          <h2 id="room-name">{capitalizeFirstLetter(room || "")}</h2>
           <h3>Users</h3>
             {userList.map(({ name, id,room }, index) => (
           <ul key={id} id="users">
