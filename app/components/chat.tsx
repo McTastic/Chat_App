@@ -96,12 +96,12 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
                         ? "serverMsg"
                         : user == username
                         ? "msgContainerMe"
-                        : "msgContainerOthers"
+                        : "msgContainerOthers slide-in"
                     }
                   >
                     <h3 className="msgUser">{user===username ? "You" : user}</h3>
                     <li className="msgMessage" style={{ display: "flex" }}>
-                      {message}
+                     <p> {message}</p>
                       <p className="msgTime">{`${hour}:${minutes} ${hourFormat}`}</p>
                     </li>
                   </div>

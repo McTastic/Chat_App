@@ -41,6 +41,10 @@ ul {
 a {
 	text-decoration: none;
 }
+p{
+	hyphens: auto;
+	word-break: break-all;
+}
 .main{
 	display: flex; 
 	align-items: center;
@@ -152,33 +156,46 @@ a {
 	margin-bottom: 15px;
 	background-color: var(--light-color);
 	border-radius: 5px;
-	overflow-wrap: break-word;
+	hyphens: auto;
+	overflow-wrap: break-all;
 }
+
 .msgContainerMe,
 .msgContainerOthers,
 .serverMsg{
 	display: flex;
 	flex-direction: column;
-	margin: 10px 0 10px 0;
+	justify-content: space-evenly;
+	border-radius: 30px;
+	padding: 8px 20px;
+	width: 50%;
+	margin: 10px 0;
 }
 .msgContainerOthers,
 .serverMsg{
 	align-items: flex-start;
 }
 .msgContainerMe{
-	background: rgba(1,1,1,.2);
+	position: relative;
+	left: 25rem;
+	background: linear-gradient(to right,#928d8d, #9c9999 , #e0e0e0);
 	align-items: flex-end;
 }
 .msgContainerOthers{
-	background: rgba(20,100,200,.5)
+	background: linear-gradient(315deg, #6a93cb 0%, #a4bfef 74%);
 }
-.serverMsg{
-	background: rgba(0,100,50,.3)
+.serverMsg{	
+	background: linear-gradient(314deg, #015d00 0%, #04bf00 74%);
+
+}
+.msgMessage{
+	margin: 0 10px;
 }
 
 .msgTime{
-	opacity: .3;
-	margin-left: 1em
+	opacity: .5;
+	margin: 0 10px;
+	white-space: nowrap;
 }
 
 .chat-messages .message .meta {
@@ -192,6 +209,18 @@ a {
 .chat-messages .message .meta span {
 	color: #777;
 }
+.slide-in {
+	animation: slideIn 0.5s forwards;
+  }
+  
+  @keyframes slideIn {
+	from {
+	  transform: translateY(200%);
+	}
+	to {
+	  transform: translateY(0%);
+	}
+  }
 
 .chat-form-container {
 	padding: 20px 30px;
