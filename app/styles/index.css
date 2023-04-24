@@ -59,10 +59,14 @@ p{
 	display: flex;
 	flex-direction: column;
 	align-items:center;
+	padding: 1rem;
+	border-radius: 20px;
+
 }
 .userWrapper,
 .roomWrapper{
 	display: flex;
+	margin: 1rem 0;
 }
 .labelWrapper{
 	width: 7em;
