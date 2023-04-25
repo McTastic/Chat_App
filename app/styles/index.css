@@ -54,37 +54,51 @@ p{
 
 /* Join Page */
 .joinForm{
-	margin-top: 2rem;
-	font-size: 50px;
+	margin-top: 3rem;
+	font-size: 28px;
+	width: 20vw;
+	height: 30vh;
 	display: flex;
 	flex-direction: column;
 	align-items:center;
+	justify-content: center;
 	padding: 1rem;
 	border-radius: 20px;
+	background: url("https://img.freepik.com/free-vector/background-realistic-abstract-technology-particle_23-2148431735.jpg?w=1800&t=st=1682455817~exp=1682456417~hmac=39d583e65a1cdcc95164f17a74d0336b46fe86a2a345e8e6b691481f114f0903,") no-repeat center center/cover;
+	box-shadow: 10px 10px 15px #000001, -10px -10px 15px rgba(8, 20, 54, 0.7)
 
 }
 .userWrapper,
 .roomWrapper{
 	display: flex;
 	margin: 1rem 0;
+	align-items: center;
 }
 .labelWrapper{
-	width: 7em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 .userForm,
 .roomForm{
-	font-size: 3rem;
-	width: 10em;
+	background: #ecf0f3;
+	font-size: 24px;
+	width: 18rem;
+	height: 2.5rem;
+	border-radius: 50px;
+	border: none;
 	text-align: center;
+	box-shadow: inset 6px 6px 6px #9a9da0
 }
 .joinBtn{ 
 	cursor: pointer;
-	font-size: 30px;
+	font-size: 18px;
 	background: linear-gradient(to right, #2193b0, #6dd5ed);
 	border: none;
 	border-radius: 10%;
 	height: 2em;
-	width: 3em;
+	width: 5rem;
 	margin-top: 1em;
 	transition: all 0.5s ease;
 }
@@ -257,22 +271,24 @@ p{
 }
 
 /* Mobile stuff */
+@media (max-width: 1448px) {
+	.joinForm{
+		width: 30rem
+	}
+}
 @media (max-width: 700px) {
 	.neon{
 		width: 90vw;
 		font-size: 60px;
 	}
 	.joinForm{
-		font-size: 30px;
+		font-size: 20px;
 		margin-top: 5em;
+		width: 20rem
 	}
 	.labelWrapper{
 		width: 5em;
 		margin-right: 10px;
-	}
-	.userForm,
-	.roomForm{
-		width: 60%;
 	}
 	.chat-messages{
 		width: 90vw;

@@ -44,26 +44,25 @@ export default function Index() {
             <div className="userWrapper">
               <div className="labelWrapper">
                 <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  className="userForm"
+                  name="username"
+                  placeholder="Enter Username"
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && joinRoom;
+                  }}
+                ></input>
               </div>
-              <input
-                type="text"
-                className="userForm"
-                name="username"
-                placeholder="Enter Username"
-                onChange={(event) => {
-                  setUsername(event.target.value);
-                }}
-                onKeyPress={(event) => {
-                  event.key === "Enter" && joinRoom;
-                }}
-              ></input>
             </div>
           </div>
           <div className="form-control">
             <div className="roomWrapper">
               <div className="labelWrapper">
                 <label htmlFor="room">Room</label>
-              </div>
               <select
                 name="room"
                 id="room"
@@ -80,6 +79,7 @@ export default function Index() {
                 <option value="room4">Room 4</option>
                 <option value="room5">Room 5</option>
               </select>
+              </div>
             </div>
           </div>
           <button className="joinBtn" onClick={joinRoom}>
