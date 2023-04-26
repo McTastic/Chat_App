@@ -7,7 +7,7 @@
 	--error-color: #d9534f;
 }
 body{
-    background-color: rgb(61, 58, 58);
+    background-color: rgb(43, 50, 68);
     color: white;
     font-family: 'Roboto', sans-serif;
 	font-size: 16px;
@@ -57,7 +57,7 @@ p{
 	margin-top: 3rem;
 	font-size: 28px;
 	width: 20vw;
-	height: 30vh;
+	height: 35vh;
 	display: flex;
 	flex-direction: column;
 	align-items:center;
@@ -89,7 +89,9 @@ p{
 	border-radius: 50px;
 	border: none;
 	text-align: center;
-	box-shadow: inset 6px 6px 6px #9a9da0
+	box-shadow: inset 6px 6px 6px #9a9da0;
+	--webkit-box-shadow: inset 6px 6px 6px #9a9da0;
+	-moz-box-shodow: inset 6px 6px 6px #9a9da0;
 }
 .joinBtn{ 
 	cursor: pointer;
@@ -284,11 +286,16 @@ p{
 	.joinForm{
 		font-size: 20px;
 		margin-top: 5em;
-		width: 20rem
+		width: 99vw;
+		height: 50vh;
+		padding: unset;
 	}
 	.labelWrapper{
 		width: 5em;
 		margin-right: 10px;
+	}
+	.userForm{
+		-webkit-appearance: none;
 	}
 	.chat-messages{
 		width: 90vw;
@@ -296,7 +303,6 @@ p{
 	.messageWrapper{
 		width: 100%;
 	}
-
 	.chat-sidebar {
 		display: none;
 	}

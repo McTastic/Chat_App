@@ -20,14 +20,19 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
   const [formValue, setFormValue] = useState("");
   const [userList, setUserList] = useState([]);
   const [messageList, setMessageList] = useState<MsgDataProps[] | []>([]);
+
+  // Get time and format to 12 hour clock with am/pm
   const hourFormat = new Date(Date.now()).getHours() - 12 >= 0 ? "pm" : "am";
   const hour =
     new Date(Date.now()).getHours() - 12 >= 0
       ? new Date(Date.now()).getHours() - 12
       : new Date(Date.now()).getHours();
   const minutes = new Date(Date.now()).getMinutes();
+
+  // Initialize socket
   const socket = useSocket();
 
+  // Use web sokcet to send message and update message list state
   const sendMessage = async (message: string) => {
     event?.preventDefault();
     if (message !== "") {
@@ -50,7 +55,8 @@ export default function Chat({setShowChat, username, room }: ChatProps) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
     setFormValue(e.target.value);
   };
-
+  
+// useEffect to handle socket events
   useEffect(() => {
     if (!socket) return;
     socket.on("message", (data: MsgDataProps) => {
